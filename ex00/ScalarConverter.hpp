@@ -7,9 +7,9 @@
 class ScalarConverter
 {
 	private:
-		int _type;
 		std::string _input;
 	public:
+		int _type;
 		bool _impossible;
 		void isImpossible();
 		void setType(std::string input);

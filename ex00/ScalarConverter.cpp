@@ -68,32 +68,100 @@ void ScalarConverter::setType(std::string input)
 		_type = 2;
 	else if (isFloat(input))
 		_type = 3;
+	else if (!input.compare("+inf") || !input.compare("-inf") ||!input.compare("inf") \
+			||!input.compare("inff") ||!input.compare("-inff") ||!input.compare("+inff") \
+			|| !input.compare("nan") ||!input.compare("-nan") ||!input.compare("+nan") \
+			|| !input.compare("nanf") ||!input.compare("-nanf") ||!input.compare("+nanf"))
+			_type = 4;
 	else
-		_type = 4;
-	std::cout << _type <<std::endl;
+		_type = 5;
 }
 
 void ScalarConverter::isImpossible()
 {
+	double value;
 	try
 	{
-		if (_type == 1)
-			std::stoi(_input);
-		else if (_type == 2)
-			std::stod(_input);
-		else if (_type == 3)
-			std::stof(_input);
+		value = std::stoi(_input);
+		std::cout << "int : " << value << std::endl;
+		if (std::isprint(static_cast<char>(value)))
+			std::cout << "char : " << static_cast<char>(value) << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		_impossible = true;
-		std::cerr << e.what() << '\n';
+		std::cerr << "int : impossible!" << std::endl;
+		std::cout << "char: impossible!" << std::endl;
 	}
+	try
+	{
+		value = std::stod(_input);
+		std::cout << "double : ";
+		if (std::isinf(value))
+		{
+			if (value < 0)
+				std::cout << "-inf";
+			else
+				std::cout << "+inf";
+		}
+		else if (std::isnan(value))
+			std::cout << "nan";
+		else
+		{
+			std::cout << value;
+			if (value == static_cast<int>(value))
+				std::cout << ".0";
+		}
+		std::cout << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "double : impossible!" << std::endl;
+	}
+
+	try
+	{
+		value = std::stof(_input);
+		std::cout << "float : ";
+		if (std::isinf(value))
+		{
+			if (value < 0)
+				std::cout << "-inf";
+			else
+				std::cout << "+inf";
+		}
+		else if (std::isnan(value))
+			std::cout << "nan";
+		else
+		{
+			std::cout << value;
+			if (value == static_cast<int>(value))
+				std::cout << ".0";
+		}
+		std::cout << "f" << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "float : impossible!" << std::endl;
+	}	
 }
 void ScalarConverter::convert(std::string input)
 {
 	ScalarConverter c;
 	c.setType(input);
+	if(c._type == 5)
+	{
+		std::cout << "invalid input!" << std::endl;
+		return ;
+	}
+	if (c._type == 0)
+	{
+		std::cout << "char: " << input << std::endl;
+		std::cout << "int: " << static_cast<int>(input[0]) << std::endl;
+		std::cout << "double: " << static_cast<double>(input[0]) << ".0" << std::endl;
+		std::cout << "float: " << static_cast<float>(input[0]) << ".0f" << std::endl;
+		return;
+	}
 	c.isImpossible();
-	std::cout << c._impossible;
 }
