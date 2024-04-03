@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Serializer.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 11:01:10 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 11:08:33 by nmunir           ###   ########.fr       */
+/*   Created: 2024/04/03 11:10:40 by nmunir            #+#    #+#             */
+/*   Updated: 2024/04/03 11:17:03 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScalarConverter.hpp"
+#ifndef SERIALIZER_HPP
+# define SERIALIZER_HPP
 
-int main (int ac, char **av)
+#include <iostream>
+
+struct Data {
+	int a;
+};
+
+class Serializer
 {
-	if (ac > 1)
-		ScalarConverter::convert(av[1]);
-	else
-		std::cout << "./cast <input>" << std::endl;
-	return (0);
-}
+	private:
+		Serializer();
+		Serializer(const  Serializer& other);
+		Serializer& operator=(const  Serializer& rhs);
+		~Serializer();
+	public:
+		static uintptr_t serialize(Data* ptr);
+		static Data* deserialize(uintptr_t raw);
+};
+#endif // !SERIALIZER_HPP

@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:06 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 11:01:07 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/04/03 11:08:28 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@
 class ScalarConverter
 {	private:
 		ScalarConverter();
-	public:
 		ScalarConverter(const  ScalarConverter& other);
 		ScalarConverter& operator=(const  ScalarConverter& rhs);
 		~ScalarConverter();
-
+	public:
 		static bool validateInput(std::string input);
 		static void convert(std::string input);
 

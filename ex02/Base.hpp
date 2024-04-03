@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 11:01:10 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 11:08:33 by nmunir           ###   ########.fr       */
+/*   Created: 2024/04/03 12:10:34 by nmunir            #+#    #+#             */
+/*   Updated: 2024/04/03 12:36:29 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScalarConverter.hpp"
+#ifndef BASE_HPP
+# define BASE_HPP
+#include <iostream>
 
-int main (int ac, char **av)
+class Base
 {
-	if (ac > 1)
-		ScalarConverter::convert(av[1]);
-	else
-		std::cout << "./cast <input>" << std::endl;
-	return (0);
-}
+	public:
+		virtual ~Base(){};
+};
+
+class A : public Base {};
+class B : public Base {};
+class C : public Base {};
+
+#endif // !BASE_HPP
