@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:10 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 12:01:01 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/04/04 12:28:54 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int main (void)
 {
 	Data ptr ;
 	ptr.a = 12;
-	uintptr_t b = 121;
-	Data* deserialized = Serializer::deserialize(b);
-	uintptr_t serialized = Serializer::serialize(deserialized);
-	std::cout << "Original value: " << b << std::endl;
-    // std::cout << "Deserialized value: " << deserialized->a << std::endl;
-    std::cout << "Serialized value: " << serialized << std::endl;
+	uintptr_t serialized = Serializer::serialize(&ptr);
+	Data* deserialized = Serializer::deserialize(serialized);
+    std::cout << "Orignal value: " << ptr.a << std::endl;
+    std::cout << "Deserialized value: " << deserialized->a << std::endl;
 	return (0);
 }

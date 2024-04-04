@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:01 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 11:02:57 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/04/04 12:11:44 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,116 +75,122 @@ bool ScalarConverter::isFloat(std::string input)
 	return (true);
 }
 
-void  ScalarConverter::printInt(std::string input)
-{
-	int value;
-	try
-	{
-		value = std::stoi(input);
-		std::cout << "int : " << value << std::endl;
-		if (std::isprint(value))
-			std::cout << "char : " << static_cast<char>(value) << std::endl;
-		else
-			std::cout << "char: Non displayable" << std::endl;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << "int : impossible!" << std::endl;
-		std::cout << "char: impossible!" << std::endl;
-	}
-}
-
-void  ScalarConverter::printDouble(std::string input)
+void  ScalarConverter::printInt(std::string input, int flag)
 {
 	double value;
-	try
+
+	value = atoll(input.c_str());
+	int maxInt = std::numeric_limits<int>::max();
+	
+	if (value > maxInt || value < -maxInt - 1 || flag == 2 || flag == 3)
 	{
-		value = std::stod(input);
-		std::cout << "double : ";
-		if (std::isinf(value))
-		{
-			if (value < 0)
-				std::cout << "-inf";
-			else
-				std::cout << "+inf";
-		}
-		else if (std::isnan(value))
-			std::cout << "nan";
-		else
-		{
-			std::cout << value;
-			if (value == static_cast<int>(value))
-				std::cout << ".0";
-		}
-		std::cout << std::endl;
+		std::cout << "char: impossible!" << std::endl;
+		std::cerr << "int : impossible!" << std::endl;
+		return ;
 	}
-	catch(const std::exception& e)
-	{
-		std::cerr << "double : impossible!" << std::endl;
-	}
+	std::cout << "int : " << static_cast<int>(value) << std::endl;
+	if (value > 31 && value < 127)
+		std::cout << "char : '" << static_cast<char>(value) << "'" << std::endl;
+	else
+		std::cout << "char: Non displayable" << std::endl;
 }
 
-void  ScalarConverter::printFloat(std::string input)
+void  ScalarConverter::printDouble(std::string input, int flag)
 {
-	float value;
-	try
+	std::cout << "double : ";
+	if (input[0] == '+')
+		input = input.erase(0,1);
+	if (flag == 2)
 	{
-		value = std::stof(input);
-		std::cout << "float : ";
-		if (std::isinf(value))
-		{
-			if (value < 0)
-				std::cout << "-inf";
-			else
-				std::cout << "+inf";
-		}
-		else if (std::isnan(value))
-			std::cout << "nan";
-		else
-		{
-			std::cout << value;
-			if (value == static_cast<int>(value))
-				std::cout << ".0";
-		}
-		std::cout << "f" << std::endl;
+		std::cout << input << std::endl;
+		return ;
 	}
-	catch(const std::exception& e)
+	else if (flag == 3)
 	{
-		std::cerr << "float : impossible!" << std::endl;
+		std::cout << input.substr(0, input.size() - 1) << std::endl;
+		return ;
 	}
+	double value = atof(input.c_str());
+	double maxDouble = std::numeric_limits<double>::max();
+	if ( value > maxDouble || value < -maxDouble)
+	{
+		std::cerr << "impossible!" << std::endl;
+		return ;
+	}
+	else
+	{
+		std::cout << value;
+		if (value == static_cast<int>(value))
+			std::cout << ".0";
+	}
+	std::cout << std::endl;
+}
+
+void  ScalarConverter::printFloat(std::string input, int flag)
+{
+	std::cout << "float : ";
+	if (input[0] == '+')
+		input = input.erase(0,1);
+	if (flag == 3)
+	{
+		std::cout << input << std::endl;
+		return ;
+	}
+	else if (flag == 2)
+	{
+		std::cout << input << "f" <<std::endl;
+		return ;
+	}
+	double maxFloat = std::numeric_limits<float>::max();
+	double value = atof(input.c_str());
+	if (value > maxFloat || value < -maxFloat)
+	{
+		std::cerr << "impossible!" << std::endl;
+		return ;
+	}
+	else
+	{
+		std::cout << static_cast<float>(value);
+		if (value == static_cast<int>(value))
+			std::cout << ".0";
+	}
+	std::cout << "f" << std::endl;
+
 }
 
 void  ScalarConverter::printChar(std::string input)
 {
-	std::cout << "char: " << input << std::endl;
+	std::cout << "char: '" << input << "'" << std::endl;
 	std::cout << "int: " << static_cast<int>(input[0]) << std::endl;
 	std::cout << "double: " << static_cast<double>(input[0]) << ".0" << std::endl;
 	std::cout << "float: " << static_cast<float>(input[0]) << ".0f" << std::endl;
 }
 
-bool ScalarConverter::validateInput(std::string input)
+int ScalarConverter::validateInput(std::string input)
 {
 	if (isChar(input) || isInt(input) || isDouble(input) ||	isFloat(input))
-		return (false);
+		return (0);
 	else if (	!input.compare("+inf") || !input.compare("-inf")  || !input.compare("inf") \
-			||	!input.compare("inff") || !input.compare("-inff") || !input.compare("+inff") \
-			|| 	!input.compare("nan")  || !input.compare("-nan")  || !input.compare("+nan") \
+			|| 	!input.compare("nan")  || !input.compare("-nan")  || !input.compare("+nan"))
+		return (2);
+	else if (	!input.compare("inff") || !input.compare("-inff") || !input.compare("+inff") \
 			|| 	!input.compare("nanf") || !input.compare("-nanf") || !input.compare("+nanf"))
-		return (false);
+		return (3);
 	else
 	{
 		std::cout << "Invalid input!" << std::endl;
-		return (true);
+		return (1);
 	}
 }
 
 void ScalarConverter::convert(std::string input)
 {
-	if(ScalarConverter::validateInput(input))
+	int flag = ScalarConverter::validateInput(input);
+	if(flag == 1)
 		return ;
 	if (isChar(input))
 		return (printChar(input));
-	printInt(input);
-	printDouble(input);
-	printFloat(input);
+	printInt(input, flag);
+	printDouble(input, flag);
+	printFloat(input, flag);
 }

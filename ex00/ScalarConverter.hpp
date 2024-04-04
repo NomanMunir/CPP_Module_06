@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:06 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 11:08:28 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/04/04 11:34:31 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ class ScalarConverter
 		ScalarConverter& operator=(const  ScalarConverter& rhs);
 		~ScalarConverter();
 	public:
-		static bool validateInput(std::string input);
+		static int validateInput(std::string input);
 		static void convert(std::string input);
 
 		static void printChar(std::string input);
-		static void printFloat(std::string input);
-		static void printDouble(std::string input);
-		static void printInt(std::string input);
+		static void printFloat(std::string input, int flag);
+		static void printDouble(std::string input, int flag);
+		static void printInt(std::string input, int flag);
 
 		static bool isFloat(std::string input);
 		static bool isDouble(std::string input);

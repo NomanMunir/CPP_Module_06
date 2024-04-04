@@ -6,17 +6,17 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:10 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/03 13:53:34 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/04/04 13:10:27 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Base.hpp"
 
+
 Base * generate(void)
 {
 	srand(time(NULL));
 	int RandIndex = rand() % 3;
-	std::cout << RandIndex << std::endl;
 
 	if (RandIndex == 0)
     	return new A();
