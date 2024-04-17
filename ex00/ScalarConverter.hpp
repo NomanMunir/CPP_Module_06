@@ -14,28 +14,20 @@
 # define SCALARCONVERTER_HPP
 
 #include <iostream>
+#include <string>
 #include <cmath>
 #include <limits>
 
+
+
 class ScalarConverter
-{	private:
+{	
+	private:
 		ScalarConverter();
 		ScalarConverter(const  ScalarConverter& other);
 		ScalarConverter& operator=(const  ScalarConverter& rhs);
 		~ScalarConverter();
 	public:
-		static int validateInput(std::string input);
-		static void convert(std::string input);
-
-		static void printChar(std::string input);
-		static void printFloat(std::string input, int flag);
-		static void printDouble(std::string input, int flag);
-		static void printInt(std::string input, int flag);
-
-		static bool isFloat(std::string input);
-		static bool isDouble(std::string input);
-		static bool isInt(std::string input);
-		static bool isChar(std::string input);
-
+		static void convert( std::string input );
 };
 #endif // !SCALARCONVERTER_HPP
