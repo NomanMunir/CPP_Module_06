@@ -20,7 +20,12 @@ ScalarConverter::~ScalarConverter() {}
 
 static int validate_input(std::string& input)
 {
-		if (input.find(' ') != std::string::npos) { std::cout << "Space found!" << std::endl;  return (1); }
+		if ( input.find(' ') != std::string::npos ) { std::cout << "Space found!" << std::endl;  return (1); }
+		if (input[input.length() - 1] != 'f' && !isdigit(input[input.length() - 1]))
+		{
+			std::cout << "Invalid input" << std::endl;
+			return (1);
+		}
 	return (0);
 }
 
@@ -94,7 +99,7 @@ void printDouble(std::string& input)
 
 void ScalarConverter::convert(std::string input)
 {
-	if (input.length() == 1 && isprint(input[0]))
+	if (input.length() == 1 && isprint(input[0]) && !isdigit(input[0]))
 	{
 		printChar(input[0]);
 		std::cout << "int: " << static_cast<int>(input[0]) << std::endl;
