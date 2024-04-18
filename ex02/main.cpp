@@ -17,7 +17,6 @@ Base * generate(void)
 {
 	srand(time(NULL));
 	int RandIndex = rand() % 3;
-
 	if (RandIndex == 0)
     	return new A();
 	else if (RandIndex == 1)
@@ -44,19 +43,14 @@ void identify(Base& p)
 		(void)a;
 		std::cout << "I am A" << std::endl;
 	}
-	catch(const std::exception& e)
-	{
-		
-	}
+	catch(const std::exception& e) { }
 	try
 	{
 		B & b = dynamic_cast<B &> (p);
 		(void)b;
 		std::cout << "I am B" << std::endl;
 	}
-	catch(const std::exception& e)
-	{
-	}
+	catch(const std::exception& e) { }
 	try
 	{
 		C & c = dynamic_cast<C &> (p);
@@ -65,6 +59,7 @@ void identify(Base& p)
 	}
 	catch(const std::exception& e) {	}
 }
+
 int main (void)
 {
 	Base *gen = generate();
@@ -74,5 +69,7 @@ int main (void)
 	}
 	identify(gen);
 	identify(*gen);
+	if (gen) delete gen;
 	return (0);
 }
+
