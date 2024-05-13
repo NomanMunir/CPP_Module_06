@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:01 by nmunir            #+#    #+#             */
-/*   Updated: 2024/04/04 12:11:44 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/05/13 09:30:32 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,37 @@ ScalarConverter& ScalarConverter::operator=(const  ScalarConverter& rhs) { (void
 ScalarConverter::~ScalarConverter() {}
 
 
-static int validate_input(std::string& input)
+static int validate_input(std::string input)
 {
-		if ( input.find(' ') != std::string::npos ) { std::cout << "Space found!" << std::endl;  return (1); }
-		if (input[input.length() - 1] != 'f' && !isdigit(input[input.length() - 1]))
+	if ( input.find(' ') != std::string::npos ) { std::cout << "Space found!" << std::endl;  return (1); }
+	if ( input == "-inf" || input == "+inf" || input == "inf" \
+		 || input == "-inff" || input == "+inff" || input == "inff" \
+		 || input == "nan" || input == "nanf" || input == "-nan" || input == "-nanf")
+		 	return (0);
+	if ( input[0] == '-' || input[0] == '+')
+		input.erase(0, 1);
+	if (input[input.length() - 1] == 'f')
+	{
+		for (size_t i = 0; i < input.length() - 1; i++)
 		{
-			std::cout << "Invalid input" << std::endl;
-			return (1);
+			if (!isdigit(input[i]))
+			{
+				std::cout << "Invalid input" << std::endl;
+				return (1);
+			}
 		}
+	}
+	else
+	{
+		for (size_t i = 0; i < input.length(); i++)
+		{
+			if (!isdigit(input[i]))
+			{
+				std::cout << "Invalid input" << std::endl;
+				return (1);
+			}
+		}
+	}
 	return (0);
 }
 
@@ -39,12 +62,12 @@ static void printChar(int c)
 		std::cout << "char: Non displayable" << std::endl;
 }
 
-void printInt(std::string& input)
+static void printInt(std::string& input)
 {
 	try
 	{
 		int i = std::stoi(input);
-		if (i > std::numeric_limits<char>::max() || i < std::numeric_limits<char>::min())
+		if (std::isnan(i) ||i > std::numeric_limits<char>::max() || i < std::numeric_limits<char>::min())
 			std::cout << "char: impossible" << std::endl;
 		else if (isprint(i))
 			std::cout << "char: " << static_cast<char>(i) << std::endl;
@@ -57,19 +80,20 @@ void printInt(std::string& input)
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
 	}
 }
 
-void printFloat(std::string& input)
+static void printFloat(std::string& input)
 {
 	try
 	{
 		float f = std::stof(input);
 		if (std::isnan(f))
-			std::cout << "double: nanf" << std::endl;
+			std::cout << "float: nanf" << std::endl;
 		else if (std::isinf(f))
-			std::cout << "double: inff" << std::endl;
+			std::cout << "float: inff" << std::endl;
 		else
 			std::cout << "float: " << f << "f" << std::endl;
 	}
@@ -79,7 +103,7 @@ void printFloat(std::string& input)
 	}
 }
 
-void printDouble(std::string& input)
+static void printDouble(std::string& input)
 {
 	try
 	{
