@@ -6,7 +6,7 @@
 /*   By: nmunir <nmunir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:01:01 by nmunir            #+#    #+#             */
-/*   Updated: 2024/05/13 09:30:32 by nmunir           ###   ########.fr       */
+/*   Updated: 2024/05/13 09:46:16 by nmunir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,15 @@ static int validate_input(std::string input)
 		 	return (0);
 	if ( input[0] == '-' || input[0] == '+')
 		input.erase(0, 1);
+	int length = input.length();
 	if (input[input.length() - 1] == 'f')
+		length--;
+	for (size_t i = 0; i < length; i++)
 	{
-		for (size_t i = 0; i < input.length() - 1; i++)
+		if (!isdigit(input[i]))
 		{
-			if (!isdigit(input[i]))
-			{
-				std::cout << "Invalid input" << std::endl;
-				return (1);
-			}
-		}
-	}
-	else
-	{
-		for (size_t i = 0; i < input.length(); i++)
-		{
-			if (!isdigit(input[i]))
-			{
-				std::cout << "Invalid input" << std::endl;
-				return (1);
-			}
+			std::cout << "Invalid input" << std::endl;
+			return (1);
 		}
 	}
 	return (0);
